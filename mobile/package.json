@@ -1,0 +1,22 @@
+{
+  "name": "2048",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main2048.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GridGit/2048.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GridGit/2048/issues"
+  },
+  "homepage": "https://github.com/GridGit/2048#readme",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
