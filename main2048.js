@@ -110,23 +110,26 @@ function generateOneNumber(){
 
 $(document).keydown(function(e){
 	if(e.keyCode == 37){
+
+	
 		// left
 		if(moveLeft()){
+
 			generateOneNumber();
-			isGameOver()
+			// isGameOver()
 		}
 		
 	}else if(e.keyCode == 38){
 		// up
 		if(moveUp()){
 			generateOneNumber();
-			isGameOver()
+			// isGameOver()
 		}
 	}else if(e.keyCode == 39){
 		// right
 		if(moveRight()){
 			generateOneNumber();
-			isGameOver()
+			// isGameOver()
 		}
 	}else if(e.keyCode == 40){
 		// down
@@ -140,24 +143,166 @@ $(document).keydown(function(e){
 
 })
 
-
+/**
+ * [moveLeft 向左移动逻辑]
+ * @return {[type]} [description]
+ */
 function moveLeft(){
-	if(!canMoveLeft()){
+	if(!canMoveLeft(board)){
 		return false
 	}
-
-	// moveLeft 逻辑
 	
+	// moveLeft 逻辑 i 行 j 列
+	// 
+	for(var i = 0; i < 4; i++){
+		for(var j = 1; j < 4; j++){
+			if(board[i][j] != 0){
+				for(var k = 0; k < j; k++){
+					if(board[i][k] == 0 && noBlockHorizontal(i,k,j,board)){
+						// move
+						showMoveAnimation(i,j,i,k);
+						// 赋值
+						board[i][k] = board[i][j];
+						board[i][j] = 0;
+						continue;
+					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board)){
+						// move
+						showMoveAnimation(i,j,i,k);
+						// add
+						board[i][k] = board[i][k] + board[i][j];
+						board[i][j] = 0;
+						continue;
+					}
+				}
+			}
+		}
+	}
+
+	setTimeout(updateBoardView(),200);
+	return true;	
+}
+
+function isGameOver(){
+
+}
+
+/**
+ * [moveLeft 向右移动逻辑]
+ * @return {[type]} [description]
+ */
+function moveRight(){
+	if(!canMoveRight(board)){
+		return false
+	}
+	
+	// moveRight 逻辑 i 行 j 列
+	// 
+	for(var i = 0; i < 4; i++){
+		for(var j = 2; j >= 0; j--){
+			if(board[i][j] != 0){
+				for(var k = 3; k > j; k--){
+					if(board[i][k] == 0 && noBlockHorizontal(i,j,k,board)){
+						// move
+						showMoveAnimation(i,j,i,k);
+						// 赋值
+						board[i][k] = board[i][j];
+						board[i][j] = 0;
+						continue;
+					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board)){
+						// move
+						showMoveAnimation(i,j,i,k);
+						// add
+						board[i][k] = board[i][k] + board[i][j];
+						board[i][j] = 0;
+						continue;
+					}
+				}
+			}
+		}
+	}
+
+	setTimeout(updateBoardView(),200);
+	return true;	
 }
 
 
+/**
+ * [moveLeft 向上移动逻辑]
+ * @return {[type]} [description]
+ */
+function moveUp(){
+	if(!canMoveUp(board)){
+		return false
+	}
+	
+	// moveUp 逻辑  j 行 i 列
+	// 
+	for(var i = 0; i < 4; i++){
+		for(var j = 1; j < 4; j++){
+			if(board[j][i] != 0){
+				for(var k = 0; k < j; k++){
+					if(board[k][i] == 0 && noBlockVertical(i,k,j,board)){
+						// move
+						showMoveAnimation(j,i,k,i);
+						// 赋值
+						board[k][i] = board[j][i];
+						board[j][i] = 0;
+						continue;
+					}else if(board[k][i] == board[j][i] && noBlockVertical(i,k,j,board)){
+						// move
+						showMoveAnimation(j,i,k,i);
+						// add
+						board[k][i] = board[k][i] + board[j][i];
+						board[j][i] = 0;
+						continue;
+					}
+				}
+			}
+		}
+	}
 
+	setTimeout(updateBoardView(),200);
+	return true;	
+}
 
+/**
+ * [moveLeft 向下移动逻辑]
+ * @return {[type]} [description]
+ */
+function moveDown(){
+	if(!canMoveDown(board)){
+		return false
+	}
+	
+	// moveDown 逻辑 j 行 i 列
+	// 
+	for(var i = 0; i < 4; i++){
+		for(var j = 2; j >= 0; j--){
+			if(board[j][i] != 0){
+				for(var k = 3; k > j; k--){
+					if(board[k][i] == 0 && noBlockVertical(i,j,k,board)){
+						// move
+						showMoveAnimation(j,i,k,i);
+						// 赋值
+						board[k][i] = board[j][i];
+						board[j][i] = 0;
+						continue;
+					}else if(board[k][i] == board[j][i] && noBlockVertical(i,j,k,board)){
+						// move
+						showMoveAnimation(j,i,k,i);
+						// add
+						board[k][i] = board[k][i] + board[j][i];
+						board[j][i] = 0;
+						continue;
+					}
+				}
+			}
+		}
+	}
 
-
-
-
-
+	setTimeout(updateBoardView(),200);
+	return true;	
+}
 
 
 

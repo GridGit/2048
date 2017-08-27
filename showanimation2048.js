@@ -14,3 +14,11 @@ function showNumberWithAnimate(i,j,number){
 	},50)
 }
 
+
+function showMoveAnimation(fromx,fromy,tox,toy){
+	var theNumberCell = $('#_2048_number_cell_'+fromx+'_'+fromy);
+	theNumberCell.animate({
+		top: getPosTop(tox),
+		left: getPosLeft(toy)
+	},200)
+}

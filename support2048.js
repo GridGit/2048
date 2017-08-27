@@ -94,23 +94,118 @@ function noSpace(board){
 }
 
 
+/**
+ *
+ * 是否能左移 i 行 j 列
+ */
 
 
+function canMoveLeft(board){
+	for(var i = 0; i < 4; i++){
+		for(var j = 1; j < 4; j++){
+			if(board[i][j] != 0){
+				if(board[i][j-1] == 0 || board[i][j] == board[i][j-1]){
+					return true
+				}
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ *
+ *同一行没有障碍物
+ *
+ * 
+ */
 
 
+function noBlockHorizontal(row,col1,col2,board){
+	for(var i = col1 + 1; i < col2; i++){
+		if(board[row][i] != 0){
+			return false;
+		}
+	}
+	return true;
+}
 
 
+/**
+ *
+ * 是否能右移 i 行 j 列
+ */
 
 
+function canMoveRight(board){
+	for(var i = 0; i < 4; i++){
+		for(var j = 2; j >= 0; j--){
+			if(board[i][j] != 0){
+				if(board[i][j+1] == 0 || board[i][j] == board[i][j+1]){
+					return true
+				}
+			}
+		}
+	}
+	return false;
+}
 
 
+/**
+ *
+ * 是否能上移 j 行 i 列
+ */
 
 
+function canMoveUp(board){
+	for(var i = 0; i < 4; i++){
+		for(var j = 1; j < 4; j++){
+			if(board[j][i] != 0){
+				if(board[j-1][i] == 0 || board[j][i] == board[j-1][i]){
+					return true
+				}
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ *
+ * 是否能上移 j 行 i 列
+ */
 
 
+function canMoveDown(board){
+	for(var i = 0; i < 4; i++){
+		for(var j = 2; j >= 0; j--){
+			if(board[j][i] != 0){
+				if(board[j+1][i] == 0 || board[j][i] == board[j+1][i]){
+					return true
+				}
+			}
+		}
+	}
+	return false;
+}
 
 
+/**
+ *
+ *同一列没有障碍物
+ *
+ * 
+ */
 
+
+function noBlockVertical(col,row1,row2,board){
+	for(var i = row1 + 1; i < row2; i++){
+		if(board[i][col] != 0){
+			return false;
+		}
+	}
+	return true;
+}
 
 
 
