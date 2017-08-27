@@ -21,25 +21,22 @@ function getPosLeft(y){
 function getNumberBackgroundColor(num){
 	switch(num){
 		case 2:
-			return '';
-			break;
-		case 4:
-			return '';
-			break;
-		case 8:
-			return '';
-			break;
-		case 8:
 			return '#eee4da';
 			break;
-		case 16:
+		case 4:
 			return '#ede0c8';
 			break;
-		case 32:
+		case 8:
 			return '#f2b179';
 			break;
-		case 64:
+		case 16:
 			return '#f59563';
+			break;
+		case 32:
+			return '#f67c5f';
+			break;
+		case 64:
+			return '#f65e3b';
 			break;
 		case 128:
 			return '#edcf72';

@@ -47,14 +47,14 @@ function init(){
 			board[i][j] = 0
 		}
 	}
-
+	// 更新视图
 	updateBoardView();
 
 
 }
 
 function updateBoardView(){
-	$('#_2048_number_cell').remove();
+	$('._2048_number_cell').remove();
 	for(var i = 0; i < 4; i++){
 		for(var j = 0; j < 4; j++){
 			$('#_2048_grid_container').append('<div class = "_2048_number_cell" id = "_2048_number_cell_'+ i +'_'+ j + '"></div>');
@@ -86,20 +86,69 @@ function generateOneNumber(){
 
 	// 
 	// 随机一个位置
-	var randomNum = parseInt(Math.floor(Math.random() * 4));
+	var randomx = parseInt(Math.floor(Math.random() * 4));
+	var randomy = parseInt(Math.floor(Math.random() * 4));
+	while(true){
+		if(board[randomx][randomy] == 0){
+			break;
+		}
+		randomx = parseInt(Math.floor(Math.random() * 4));
+		randomy = parseInt(Math.floor(Math.random() * 4));
+	}
 
-	
 	// 随机一个数字 
-	 
+	var randomNumber = Math.random() < 0.5 ? 2 : 4;
+
 	// 在随机位置显示随机数字
+	board[randomx][randomy] = randomNumber
+	showNumberWithAnimate(randomx,randomy,randomNumber);
+
 	return true;
 }
 
 
 
+$(document).keydown(function(e){
+	if(e.keyCode == 37){
+		// left
+		if(moveLeft()){
+			generateOneNumber();
+			isGameOver()
+		}
+		
+	}else if(e.keyCode == 38){
+		// up
+		if(moveUp()){
+			generateOneNumber();
+			isGameOver()
+		}
+	}else if(e.keyCode == 39){
+		// right
+		if(moveRight()){
+			generateOneNumber();
+			isGameOver()
+		}
+	}else if(e.keyCode == 40){
+		// down
+		if(moveDown()){
+			generateOneNumber();
+			isGameOver()
+		}
+	}
 
 
 
+})
+
+
+function moveLeft(){
+	if(!canMoveLeft()){
+		return false
+	}
+
+	// moveLeft 逻辑
+	
+}
 
 
 
