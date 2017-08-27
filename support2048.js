@@ -44,7 +44,7 @@ function getNumberBackgroundColor(num){
 		case 256:
 			return '#edcc61';
 			break;
-		case 521:
+		case 512:
 			return '#9c0';
 			break;
 		case 1024:
@@ -207,6 +207,11 @@ function noBlockVertical(col,row1,row2,board){
 	return true;
 }
 
-
+function noMove(board){
+	if(canMoveDown(board) || canMoveUp(board) || canMoveRight(board) || canMoveLeft(board)){
+		return false;
+	}
+	return true;
+}
 
 

@@ -4,6 +4,7 @@
 // 
 var board = [];
 var score = 0;
+var hasConfilcted = [];
 
 $(document).ready(function(){
 	
@@ -43,8 +44,10 @@ function init(){
 	// 初始化数据
 	for(var i = 0; i < 4; i++){
 		board[i] =[];
+		hasConfilcted[i]= []
 		for(var j = 0; j < 4; j++){
-			board[i][j] = 0
+			board[i][j] = 0；
+			hasConfilcted[i][j] = false;
 		}
 	}
 	// 更新视图
@@ -75,6 +78,8 @@ function updateBoardView(){
 				theNumberCell.css('color',getNumberColor(board[i][j]));
 				theNumberCell.text(board[i][j]);
 			}
+
+			hasConfilcted[i][j] = false;
 		}
 	}
 }
@@ -88,14 +93,26 @@ function generateOneNumber(){
 	// 随机一个位置
 	var randomx = parseInt(Math.floor(Math.random() * 4));
 	var randomy = parseInt(Math.floor(Math.random() * 4));
-	while(true){
+	var times = 0
+	while(times < 50){
 		if(board[randomx][randomy] == 0){
 			break;
 		}
 		randomx = parseInt(Math.floor(Math.random() * 4));
 		randomy = parseInt(Math.floor(Math.random() * 4));
-	}
 
+		times++;
+	}
+	if(times == 50){
+		for(var i 0; i < 4; i++){
+			for(var j = 0; j < 4; j++){
+				if(board[i][j] == 0){
+					randomx = x;
+					randomy = y;
+				}
+			}
+		}
+	}
 	// 随机一个数字 
 	var randomNumber = Math.random() < 0.5 ? 2 : 4;
 
@@ -115,33 +132,69 @@ $(document).keydown(function(e){
 		// left
 		if(moveLeft()){
 
-			generateOneNumber();
-			// isGameOver()
+			setTimeout(function(){
+				generateOneNumber();
+			},210)
+			setTimeout(function(){
+				isGameOver();
+			},300)
+			
 		}
 		
 	}else if(e.keyCode == 38){
 		// up
 		if(moveUp()){
-			generateOneNumber();
-			// isGameOver()
+			setTimeout(function(){
+				generateOneNumber();
+			},210)
+			setTimeout(function(){
+				isGameOver();
+			},300)
 		}
 	}else if(e.keyCode == 39){
 		// right
 		if(moveRight()){
-			generateOneNumber();
-			// isGameOver()
+			setTimeout(function(){
+				generateOneNumber();
+			},210)
+			setTimeout(function(){
+				isGameOver();
+			},300)
 		}
 	}else if(e.keyCode == 40){
 		// down
 		if(moveDown()){
-			generateOneNumber();
-			isGameOver()
+			setTimeout(function(){
+				generateOneNumber();
+			},210)
+			setTimeout(function(){
+				isGameOver();
+			},300)
 		}
 	}
 
 
 
 })
+
+
+/**
+ * 游戏结束
+ * @return {[type]} [description]
+ */
+ 
+function isGameOver(){
+	// 
+	if(noSpace(board) && noMove(board)){
+		gameOver();
+	}
+}
+
+function gameOver(){
+	alert("game over")
+}
+
+
 
 /**
  * [moveLeft 向左移动逻辑]
@@ -165,12 +218,20 @@ function moveLeft(){
 						board[i][k] = board[i][j];
 						board[i][j] = 0;
 						continue;
-					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board)){
+					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board) && !hasConfilcted[i][k]){
+						
 						// move
 						showMoveAnimation(i,j,i,k);
 						// add
 						board[i][k] = board[i][k] + board[i][j];
+						
+						// add score
+						score = score + board[i][k];
+						updateScore(score);
+
 						board[i][j] = 0;
+
+						hasConfilcted[i][k] = true;
 						continue;
 					}
 				}
@@ -178,13 +239,13 @@ function moveLeft(){
 		}
 	}
 
-	setTimeout(updateBoardView(),200);
+	setTimeout(function(){
+		updateBoardView();
+	},200);
 	return true;	
 }
 
-function isGameOver(){
 
-}
 
 /**
  * [moveLeft 向右移动逻辑]
@@ -208,12 +269,19 @@ function moveRight(){
 						board[i][k] = board[i][j];
 						board[i][j] = 0;
 						continue;
-					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board)){
+					}else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board) && !hasConfilcted[i][k]){
 						// move
 						showMoveAnimation(i,j,i,k);
 						// add
 						board[i][k] = board[i][k] + board[i][j];
+						
+						// add score
+						score = score + board[i][k];
+						updateScore(score);
+
 						board[i][j] = 0;
+
+						hasConfilcted[i][k] = true;
 						continue;
 					}
 				}
@@ -221,7 +289,9 @@ function moveRight(){
 		}
 	}
 
-	setTimeout(updateBoardView(),200);
+	setTimeout(function(){
+		updateBoardView();
+	},200);
 	return true;	
 }
 
@@ -248,12 +318,18 @@ function moveUp(){
 						board[k][i] = board[j][i];
 						board[j][i] = 0;
 						continue;
-					}else if(board[k][i] == board[j][i] && noBlockVertical(i,k,j,board)){
+					}else if(board[k][i] == board[j][i] && noBlockVertical(i,k,j,board) && !hasConfilcted[k][i]){
 						// move
 						showMoveAnimation(j,i,k,i);
 						// add
 						board[k][i] = board[k][i] + board[j][i];
 						board[j][i] = 0;
+
+						// add score
+						score = score + board[k][i];
+						updateScore(score);
+
+						hasConfilcted[k][i] = true;
 						continue;
 					}
 				}
@@ -261,7 +337,9 @@ function moveUp(){
 		}
 	}
 
-	setTimeout(updateBoardView(),200);
+	setTimeout(function(){
+		updateBoardView();
+	},200);
 	return true;	
 }
 
@@ -287,12 +365,18 @@ function moveDown(){
 						board[k][i] = board[j][i];
 						board[j][i] = 0;
 						continue;
-					}else if(board[k][i] == board[j][i] && noBlockVertical(i,j,k,board)){
+					}else if(board[k][i] == board[j][i] && noBlockVertical(i,j,k,board) && !hasConfilcted[k][i]){
 						// move
 						showMoveAnimation(j,i,k,i);
 						// add
 						board[k][i] = board[k][i] + board[j][i];
 						board[j][i] = 0;
+
+						// add score
+						score = score + board[k][i];
+						updateScore(score);
+
+						hasConfilcted[k][i] = true;
 						continue;
 					}
 				}
@@ -300,7 +384,9 @@ function moveDown(){
 		}
 	}
 
-	setTimeout(updateBoardView(),200);
+	setTimeout(function(){
+		updateBoardView();
+	},200);
 	return true;	
 }
 
