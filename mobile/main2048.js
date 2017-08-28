@@ -59,7 +59,10 @@ function newgame(){
 	  */
 	 generateOneNumber();
 	 generateOneNumber();
-
+	 /**
+	  * 分数设为0
+	  */
+	 $('#score').text("0");
 	 
 }
 
@@ -148,8 +151,8 @@ function generateOneNumber(){
 		for(var i = 0; i < 4; i++){
 			for(var j = 0; j < 4; j++){
 				if(board[i][j] == 0){
-					randomx = x;
-					randomy = y;
+					randomx = i;
+					randomy = j;
 				}
 			}
 		}
@@ -227,8 +230,8 @@ document.addEventListener('touchstart',function(e){
 });
 
 document.addEventListener('touchmove',function(e){
-	// e.preventDefault();
-})
+	e.preventDefault();
+},{passive:false})
 document.addEventListener('touchend',function(e){
 	
 	endX = e.changedTouches[0].pageX;
@@ -237,7 +240,7 @@ document.addEventListener('touchend',function(e){
 	var deltaX = endX - startX;
 	var deltaY = endY - startY;
 
-	if(Math.abs(deltaX) < 0.3*documentWidth && Math.abs(deltaY) < 0.3*documentWidth){
+	if(Math.abs(deltaX) < 0.15*documentWidth && Math.abs(deltaY) < 0.15*documentWidth){
 		return;
 	}
 	if(Math.abs(deltaX) > Math.abs(deltaY)){

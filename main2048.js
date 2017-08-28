@@ -27,7 +27,10 @@ function newgame(){
 	  */
 	 generateOneNumber();
 	 generateOneNumber();
-
+	 /**
+	  * 分数设为0
+	  */
+	 $('#score').text("0");
 	 
 }
 
@@ -107,8 +110,8 @@ function generateOneNumber(){
 		for(var i = 0; i < 4; i++){
 			for(var j = 0; j < 4; j++){
 				if(board[i][j] == 0){
-					randomx = x;
-					randomy = y;
+					randomx = i;
+					randomy = j;
 				}
 			}
 		}

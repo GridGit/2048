@@ -4,16 +4,18 @@
 	<meta charset="UTF-8">
 	<title>2048</title>
 	<meta name="viewport" content='width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0'>
-	<link rel="icon" type="image/x-icon" href="./2048.ico">
-	<link rel="stylesheet" type="text/css" href="./2048.css">
+	<link rel="icon" type="image/x-icon" href="./resources/2048.ico">
+	<link rel="stylesheet" type="text/css" href="./css/2048.css">
 	<style type="text/css">
 
 	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
 		<header>
 			<h1>2048</h1>
-			<a href="javascript: newgame()" id="newgamebutton">New Game</a>
+			<a href="javascript: newGame()" id="newgamebutton">New Game</a>
 			<p>score：<span id="score">0</span>分</p>
 		</header>
 		<div id="_2048_grid_container" class="_2048_grid_container">
@@ -39,12 +41,15 @@
 			<div class="_2048_grid_cell" id="_2048_grid_cell_3_3"></div>
 		</div>
 
-	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src='./support2048.js'></script>
 	<script type="text/javascript" src='./showanimation2048.js'></script>
-	<script type="text/javascript" src='./main2048.js'></script>
-	<script type="text/javascript">
-	
-	</script>
+	<script type="text/javascript" src='./game.js'></script> -->
+	<!-- <script type="text/javascript"></script> -->
+	<script type="text/javascript" src="./js/support.js"></script>
+	<script type="text/javascript" src="./js/showSupport.js"></script>
+	<script type="text/javascript" src="./js/game.js"> </script>
+	<script type="text/javascript" src="./js/index.js"></script>
+
 </body>
 </html>
